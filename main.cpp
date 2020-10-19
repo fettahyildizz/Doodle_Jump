@@ -25,7 +25,6 @@ class Platform{
 			
 			pieceSprite.setPosition(random_num,random2);
 			
-			
 			pos.x = random_num;
 			pos.y = random2;
 			
@@ -33,26 +32,10 @@ class Platform{
 		void setWindow(sf::RenderWindow* window) { this->window = window;}		
 		void draw(){window->draw(pieceSprite);}		
 		sf::Sprite getSprite(){	return pieceSprite;	}		
-		void print_position(){
-			cout << pieceSprite.getPosition().x <<endl;
-			cout << pieceSprite.getPosition().y <<endl;
-		}
+		
 		int get_position_y(){
 			return pos.y;
 		}
-		/*void move(){
-			if (pos.y>530){
-				pos.y = rand()%30*(-1);
-				pos.x = rand()%400;
-				if(pos.x>352){
-					pos.x=332;
-				}
-				
-			}
-			pieceSprite.setPosition(pos.x,pos.y);
-		
-			
-		}*/
 		void setPosition(int x, int y){
 			pieceSprite.setPosition(x,y);
 			pos.x = x;
@@ -79,10 +62,8 @@ class Doodle{
 		Doodle(){
 
 			pieceTexture.loadFromFile("images/doodle.png");
-			pieceSprite.setTexture(pieceTexture);
-			
-			pieceSprite.setPosition(200,490);
-			
+			pieceSprite.setTexture(pieceTexture);			
+			pieceSprite.setPosition(200,490);			
 			pieceSprite.setOrigin(40.0,40.0);
 			pos.x = pieceSprite.getPosition().x;
 			pos.y = pieceSprite.getPosition().y;
@@ -93,20 +74,13 @@ class Doodle{
 		void setPlatform(vector<Platform*> platVec){this->platVec = platVec;}
 	
 		void draw(){window->draw(pieceSprite);}		
-		sf::Sprite getSprite(){	return pieceSprite;	}		
-		void get_position(){
-			cout << pieceSprite.getPosition().x <<endl;
-			cout << pieceSprite.getPosition().y <<endl;
-		}
+		sf::Sprite getSprite(){	return pieceSprite;}		
 		void setPosition(int x, int y){
 			pieceSprite.setPosition(x,y);
 			pos.x = x;
 			pos.y = y;
-		}
-
-		
-		void move(){
-			
+		}		
+		void move(){			
 			
 			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) pos.x+=3;
 			if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) pos.x-=3;
@@ -119,51 +93,34 @@ class Doodle{
 					score+=10;
 					dy = -10;
 					cout<<"Score: "<<score<<endl;
-					first_jump_bool=false;
-					
-					
-					
-					
-					
+					first_jump_bool=false;					
 				}
 			}
 			
-			if(pos.y<200){
-						
-						for(int k = 0;k<platVec.size();k++){
-							pos.y = 200;
-						
-							platVec[k]->setPosition(platVec[k]->getSprite().getPosition().x,platVec[k]->getSprite().getPosition().y-dy);
-							if(platVec[k]->getSprite().getPosition().y>533){
-								platVec[k]->setPosition(rand()%400,(rand()%200)*(-1));
-							}
-							
-						}
-						
-						
+			if(pos.y<200){						
+				for(int k = 0;k<platVec.size();k++){
+					pos.y = 200;
+
+					platVec[k]->setPosition(platVec[k]->getSprite().getPosition().x,platVec[k]->getSprite().getPosition().y-dy);
+					if(platVec[k]->getSprite().getPosition().y>533){
+						platVec[k]->setPosition(rand()%400,(rand()%200)*(-1));
 					}
-			
-			
-			
+				}
+			}			
 			if(pos.y>500&&first_jump_bool==true) dy=-10.0;
 			
 			if(pos.x<0) pos.x=0;
 			if(pos.x>400) pos.x=400;
 			
-			if(pos.y<200){
-				
+			if(pos.y<200){				
 				dy2=8;
 				for(int i = 0;i<platVec.size();i++){
-					platVec[i]->getSprite().setPosition(platVec[i]->getSprite().getPosition().x,platVec[i]->getSprite().getPosition().y+dy2);
-				
+					platVec[i]->getSprite().setPosition(platVec[i]->getSprite().getPosition().x,platVec[i]->getSprite().getPosition().y+dy2);				
 				}
 				dy2-=0.25;
-			}
-				
+			}				
 			pieceSprite.setPosition(pos.x,pos.y);
-		}
-
-		
+		}		
 };
 
 int main() {
@@ -225,8 +182,7 @@ int main() {
 			}
 			window.clear(sf::Color::Black);
 		
-		}
-	
+		}	
 		doodle.move();
 		
 		window.draw(s_bacground);
